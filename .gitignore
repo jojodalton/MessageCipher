@@ -1,0 +1,29 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+dist/
+build/
+# Keep MessageCipher.spec (PyInstaller), exclude others
+# *.spec
+
+# PyInstaller
+*.exe
+
+# Hypothesis test database
+.hypothesis/
+
+# pytest
+.pytest_cache/
+
+# Node / PWA
+pwa/node_modules/
+pwa/package-lock.json
+
+# IDE
+.vscode/
+.kiro/
+
+# OS
+Thumbs.db
+.DS_Store

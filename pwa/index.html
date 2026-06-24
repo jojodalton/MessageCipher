@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>MessageCipher</title>
+  <meta name="description" content="Encode and decode messages using a modified Vigenère cipher">
+  <meta name="theme-color" content="#0077b6">
+  <link rel="stylesheet" href="./style.css">
+  <link rel="manifest" href="./manifest.json">
+  <link rel="icon" href="./icons/icon-192.png" type="image/png">
+</head>
+<body>
+  <header>
+    <h1>MessageCipher</h1>
+    <button id="theme-toggle" type="button" aria-label="Toggle dark and light theme">🌓 Theme</button>
+  </header>
+
+  <main>
+    <section aria-label="Key input">
+      <label for="key-input">Key</label>
+      <input
+        id="key-input"
+        type="text"
+        placeholder="Enter encryption key"
+        autocomplete="off"
+        aria-describedby="key-description"
+      >
+      <span id="key-description" class="visually-hidden">Printable ASCII characters only, 1–1000 characters</span>
+    </section>
+
+    <section aria-label="Message input">
+      <label for="message-textarea">Message</label>
+      <div class="textarea-group">
+        <textarea
+          id="message-textarea"
+          rows="5"
+          placeholder="Enter plaintext message"
+          aria-describedby="message-description"
+        ></textarea>
+        <span id="message-description" class="visually-hidden">Printable ASCII characters and newlines allowed</span>
+        <div class="textarea-actions">
+          <button id="message-copy" type="button" aria-label="Copy message to clipboard" disabled>Copy</button>
+          <button id="message-paste" type="button" aria-label="Paste from clipboard into message">Paste</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="action-buttons" aria-label="Cipher actions">
+      <button id="encode-btn" type="button" aria-label="Encode message">Encode</button>
+      <button id="decode-btn" type="button" aria-label="Decode ciphertext">Decode</button>
+      <button id="clear-btn" type="button" aria-label="Clear all fields">Clear</button>
+    </section>
+
+    <section aria-label="Status messages">
+      <div id="status-banner" role="status" aria-live="polite" aria-atomic="true"></div>
+    </section>
+
+    <section aria-label="Ciphertext output">
+      <label for="ciphertext-textarea">Ciphertext</label>
+      <div class="textarea-group">
+        <textarea
+          id="ciphertext-textarea"
+          rows="5"
+          placeholder="Ciphertext appears here"
+          aria-describedby="ciphertext-description"
+        ></textarea>
+        <span id="ciphertext-description" class="visually-hidden">Encoded output or ciphertext to decode</span>
+        <div class="textarea-actions">
+          <button id="ciphertext-copy" type="button" aria-label="Copy ciphertext to clipboard" disabled>Copy</button>
+          <button id="ciphertext-paste" type="button" aria-label="Paste from clipboard into ciphertext">Paste</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script type="module" src="./src/app.js"></script>
+</body>
+</html>
