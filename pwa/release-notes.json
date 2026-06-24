@@ -1,0 +1,13 @@
+{
+  "releases": [
+    {
+      "version": "1.0.0",
+      "date": "2025-01-15",
+      "changes": [
+        "Initial release with encode/decode functionality",
+        "Dark/light theme support",
+        "Copy and paste clipboard integration"
+      ]
+    }
+  ]
+}

@@ -22,6 +22,8 @@ import {
   setCiphertextValue,
   updateCopyButtonState,
 } from './ui.js';
+import { loadVersion, loadReleaseNotes } from './version-manager.js';
+import { showReleaseNotesDialog } from './release-notes-dialog.js';
 
 /**
  * Handles the Encode button click.
@@ -144,6 +146,41 @@ function updateCiphertextCopyState() {
 }
 
 /**
+ * Initializes the version badge in the header.
+ * Loads the version string and displays it. If the version is valid
+ * (not "unknown"), attaches a click handler to show release notes.
+ */
+async function initVersionBadge() {
+  const badge = document.getElementById('version-badge');
+  if (!badge) return;
+
+  const version = await loadVersion();
+  badge.textContent = `v${version}`;
+
+  if (version !== 'unknown') {
+    badge.classList.add('clickable');
+    badge.setAttribute('role', 'button');
+    badge.setAttribute('tabindex', '0');
+    badge.setAttribute('aria-label', `Version ${version}. Click to view release notes.`);
+
+    const openReleaseNotes = async () => {
+      const entry = await loadReleaseNotes(version);
+      showReleaseNotesDialog(entry, badge);
+    };
+
+    badge.addEventListener('click', openReleaseNotes);
+    badge.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        openReleaseNotes();
+      }
+    });
+  } else {
+    badge.setAttribute('aria-label', 'Version unknown');
+  }
+}
+
+/**
  * Registers the service worker for offline support.
  * Listens for controller changes and messages from the service worker
  * to notify the user when a new version is available.
@@ -236,6 +273,9 @@ function init() {
 
   // Register service worker
   registerServiceWorker();
+
+  // Initialize version badge
+  initVersionBadge();
 }
 
 document.addEventListener('DOMContentLoaded', init);

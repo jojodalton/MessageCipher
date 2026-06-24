@@ -1,7 +1,7 @@
 // MessageCipher PWA Service Worker
 // Cache-first strategy for offline support
 
-const CACHE_NAME = 'messagecipher-pwa-v1';
+const CACHE_NAME = 'messagecipher-pwa-v1.0.0';
 
 const ASSETS = [
   './',
@@ -13,6 +13,11 @@ const ASSETS = [
   './src/clipboard.js',
   './src/theme.js',
   './src/ui.js',
+  './src/version-manager.js',
+  './src/release-notes-dialog.js',
+  './src/highlight-engine.js',
+  './version.json',
+  './release-notes.json',
   './manifest.json',
   './icons/icon-192.png',
   './icons/icon-512.png'

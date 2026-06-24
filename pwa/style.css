@@ -418,3 +418,206 @@ button:disabled {
   white-space: nowrap;
   border: 0;
 }
+
+/* --------------------------------------------------------------------------
+   Highlight Overlay — positioned behind textarea (Req 5.3, 6.1, 6.5)
+   -------------------------------------------------------------------------- */
+.textarea-group {
+  position: relative;
+}
+
+.highlight-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+  padding: 0.75rem;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  box-sizing: border-box;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  font-family: "SF Mono", "Fira Code", "Fira Mono", Menlo, Consolas,
+    "DejaVu Sans Mono", monospace;
+  font-size: 16px;
+  line-height: 1.5;
+  color: transparent;
+}
+
+.highlight-overlay mark {
+  color: transparent;
+  border-radius: 2px;
+  padding: 0;
+}
+
+/* Light theme highlight — #ffa07a on #ffffff bg = ~3.2:1 contrast (WCAG AA non-text) */
+:root .highlight-overlay mark,
+[data-theme="light"] .highlight-overlay mark {
+  background-color: #ffa07a;
+}
+
+/* Dark theme highlight — #cc4444 on #0f3460 bg = ~3.1:1 contrast (WCAG AA non-text) */
+[data-theme="dark"] .highlight-overlay mark {
+  background-color: #cc4444;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]) .highlight-overlay mark {
+    background-color: #cc4444;
+  }
+}
+
+/* Textarea must be transparent so overlay shows through */
+.textarea-group textarea {
+  position: relative;
+  z-index: 1;
+  background-color: transparent;
+}
+
+/* --------------------------------------------------------------------------
+   Version Badge — smaller font, WCAG AA 4.5:1 contrast (Req 2.2)
+   -------------------------------------------------------------------------- */
+.version-badge {
+  font-size: 0.75rem;
+  font-weight: 500;
+  cursor: pointer;
+  padding: 0.125rem 0.5rem;
+  border-radius: 4px;
+  transition: opacity 0.2s ease;
+  text-decoration: none;
+}
+
+/* Light theme: #495057 on #f8f9fa bg = ~7.5:1 contrast */
+:root .version-badge,
+[data-theme="light"] .version-badge {
+  color: #495057;
+}
+
+/* Dark theme: #a0a0b0 on #1a1a2e bg = ~6.5:1 contrast */
+[data-theme="dark"] .version-badge {
+  color: #a0a0b0;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]) .version-badge {
+    color: #a0a0b0;
+  }
+}
+
+.version-badge:hover {
+  opacity: 0.8;
+  text-decoration: underline;
+}
+
+.version-badge:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+/* --------------------------------------------------------------------------
+   Highlight Warning Indicator — below textarea (Req 5.5)
+   -------------------------------------------------------------------------- */
+.highlight-warning {
+  font-size: 0.8rem;
+  font-weight: 500;
+  margin-top: 0.25rem;
+  padding: 0.125rem 0;
+}
+
+/* Light theme: warning text color with adequate contrast */
+:root .highlight-warning,
+[data-theme="light"] .highlight-warning {
+  color: #842029;
+}
+
+/* Dark theme: warning text */
+[data-theme="dark"] .highlight-warning {
+  color: #f5a3a8;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]) .highlight-warning {
+    color: #f5a3a8;
+  }
+}
+
+.highlight-warning:empty {
+  display: none;
+}
+
+/* --------------------------------------------------------------------------
+   Release Notes Dialog Overlay & Modal (Req 2.3, 3.4, 3.6)
+   -------------------------------------------------------------------------- */
+.release-notes-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+
+.release-notes-dialog {
+  background-color: var(--color-bg-secondary);
+  color: var(--color-text);
+  border: 1px solid var(--color-border);
+  border-radius: 12px;
+  padding: 1.5rem;
+  max-width: 480px;
+  width: 100%;
+  max-height: 80vh;
+  overflow-y: auto;
+  box-shadow: 0 8px 32px var(--color-shadow);
+}
+
+.release-notes-dialog h2 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 0.25rem;
+}
+
+.release-notes-dialog .release-date {
+  font-size: 0.85rem;
+  color: var(--color-text-muted);
+  margin-bottom: 1rem;
+}
+
+.release-notes-dialog ul {
+  list-style: disc;
+  padding-left: 1.25rem;
+  margin-bottom: 1.25rem;
+}
+
+.release-notes-dialog li {
+  margin-bottom: 0.375rem;
+  line-height: 1.4;
+}
+
+.release-notes-dialog .dialog-close {
+  display: block;
+  margin-left: auto;
+  background-color: var(--color-btn-secondary);
+  color: #ffffff;
+  font-size: 0.875rem;
+  padding: 0.5rem 1rem;
+  min-height: 44px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.release-notes-dialog .dialog-close:hover {
+  background-color: var(--color-btn-secondary-hover);
+}
+
+.release-notes-dialog .dialog-close:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
