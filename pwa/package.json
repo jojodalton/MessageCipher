@@ -1,6 +1,6 @@
 {
   "name": "messagecipher-pwa",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "MessageCipher Progressive Web App - a mobile-optimized cipher tool",
   "type": "module",
   "scripts": {
