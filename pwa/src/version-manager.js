@@ -91,3 +91,27 @@ export async function loadReleaseNotes(version) {
     return null;
   }
 }
+
+/**
+ * Loads all release notes entries from release-notes.json.
+ * Returns an empty array on error.
+ * @returns {Promise<{version: string, date: string, changes: string[]}[]>}
+ */
+export async function loadAllReleaseNotes() {
+  try {
+    const response = await fetch('release-notes.json');
+    if (!response.ok) {
+      return [];
+    }
+
+    const data = await response.json();
+
+    if (!data || !Array.isArray(data.releases)) {
+      return [];
+    }
+
+    return data.releases;
+  } catch {
+    return [];
+  }
+}

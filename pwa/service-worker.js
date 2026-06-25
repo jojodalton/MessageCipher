@@ -44,14 +44,6 @@ self.addEventListener('activate', (event) => {
         );
       })
       .then(() => self.clients.claim())
-      .then(() => {
-        // Notify all clients that a new version is active
-        return self.clients.matchAll().then((clients) => {
-          clients.forEach((client) => {
-            client.postMessage({ type: 'SW_UPDATED' });
-          });
-        });
-      })
   );
 });
 

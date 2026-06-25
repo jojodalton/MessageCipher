@@ -18,18 +18,25 @@ let keydownHandler = null;
 
 /**
  * Creates and shows the release notes modal dialog.
- * If entry is null or has no changes, a fallback message is displayed.
+ * Accepts either a single entry or an array of all releases.
+ * If entries is null/empty, a fallback message is displayed.
  *
- * @param {{ version: string, date: string, changes: string[] } | null} entry
+ * @param {{ version: string, date: string, changes: string[] }[] | { version: string, date: string, changes: string[] } | null} entries
  * @param {HTMLElement} triggerElement - Element to return focus to on close
  */
-export function showReleaseNotesDialog(entry, triggerElement) {
+export function showReleaseNotesDialog(entries, triggerElement) {
   // Close any existing dialog first
   if (dialogOverlay) {
     closeReleaseNotesDialog();
   }
 
   triggerEl = triggerElement;
+
+  // Normalize: if a single entry is passed, wrap it in an array
+  let releases = entries;
+  if (entries && !Array.isArray(entries)) {
+    releases = [entries];
+  }
 
   // Create the backdrop overlay
   dialogOverlay = document.createElement('div');
@@ -44,7 +51,7 @@ export function showReleaseNotesDialog(entry, triggerElement) {
   dialog.className = 'release-notes-dialog';
 
   // Build dialog content
-  dialog.innerHTML = buildDialogContent(entry);
+  dialog.innerHTML = buildDialogContent(releases);
 
   dialogOverlay.appendChild(dialog);
   document.body.appendChild(dialogOverlay);
@@ -83,15 +90,15 @@ export function closeReleaseNotesDialog() {
 
 /**
  * Builds the inner HTML content for the dialog.
- * Shows a fallback message when entry is null or changes are unavailable.
+ * Shows all releases, or a fallback message when no entries are available.
  *
- * @param {{ version: string, date: string, changes: string[] } | null} entry
+ * @param {{ version: string, date: string, changes: string[] }[] | null} releases
  * @returns {string}
  */
-function buildDialogContent(entry) {
+function buildDialogContent(releases) {
   const closeButton = '<button class="release-notes-close" aria-label="Close release notes">&times;</button>';
 
-  if (!entry || !Array.isArray(entry.changes) || entry.changes.length === 0) {
+  if (!releases || !Array.isArray(releases) || releases.length === 0) {
     return `
       <h2 id="release-notes-heading">Release Notes</h2>
       ${closeButton}
@@ -99,18 +106,29 @@ function buildDialogContent(entry) {
     `;
   }
 
-  const version = escapeHTML(entry.version);
-  const date = escapeHTML(entry.date);
-  const changeItems = entry.changes
-    .map((change) => `<li>${escapeHTML(change)}</li>`)
-    .join('');
-
-  return `
-    <h2 id="release-notes-heading">Release Notes — v${version}</h2>
+  let html = `
+    <h2 id="release-notes-heading">Release Notes</h2>
     ${closeButton}
-    <p class="release-notes-date">Released: ${date}</p>
-    <ul class="release-notes-changes">${changeItems}</ul>
   `;
+
+  for (const entry of releases) {
+    if (!entry || !Array.isArray(entry.changes) || entry.changes.length === 0) continue;
+
+    const version = escapeHTML(entry.version);
+    const date = escapeHTML(entry.date);
+    const changeItems = entry.changes
+      .map((change) => `<li>${escapeHTML(change)}</li>`)
+      .join('');
+
+    html += `
+      <section class="release-entry">
+        <h3>v${version} <span class="release-notes-date">— ${date}</span></h3>
+        <ul class="release-notes-changes">${changeItems}</ul>
+      </section>
+    `;
+  }
+
+  return html;
 }
 
 /**

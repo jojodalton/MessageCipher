@@ -45,8 +45,14 @@ export function clearAllFields() {
   const ciphertextTextarea = document.getElementById('ciphertext-textarea');
 
   if (keyInput) keyInput.value = '';
-  if (messageTextarea) messageTextarea.value = '';
-  if (ciphertextTextarea) ciphertextTextarea.value = '';
+  if (messageTextarea) {
+    messageTextarea.value = '';
+    messageTextarea.dispatchEvent(new Event('input', { bubbles: true }));
+  }
+  if (ciphertextTextarea) {
+    ciphertextTextarea.value = '';
+    ciphertextTextarea.dispatchEvent(new Event('input', { bubbles: true }));
+  }
 
   clearStatus();
 }

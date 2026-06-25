@@ -22,7 +22,7 @@ import {
   setCiphertextValue,
   updateCopyButtonState,
 } from './ui.js';
-import { loadVersion, loadReleaseNotes } from './version-manager.js';
+import { loadVersion, loadAllReleaseNotes } from './version-manager.js';
 import { showReleaseNotesDialog } from './release-notes-dialog.js';
 import { initHighlight } from './highlight-engine.js';
 
@@ -165,8 +165,8 @@ async function initVersionBadge() {
     badge.setAttribute('aria-label', `Version ${version}. Click to view release notes.`);
 
     const openReleaseNotes = async () => {
-      const entry = await loadReleaseNotes(version);
-      showReleaseNotesDialog(entry, badge);
+      const releases = await loadAllReleaseNotes();
+      showReleaseNotesDialog(releases, badge);
     };
 
     badge.addEventListener('click', openReleaseNotes);
@@ -189,33 +189,8 @@ async function initVersionBadge() {
  */
 function registerServiceWorker() {
   if ('serviceWorker' in navigator) {
-    // Listen for controller changes (new service worker took over)
-    navigator.serviceWorker.addEventListener('controllerchange', () => {
-      showStatus('New version available. Refresh to update.', 'success');
-    });
-
-    // Listen for messages from the service worker (SW_UPDATED notification)
-    navigator.serviceWorker.addEventListener('message', (event) => {
-      if (event.data && event.data.type === 'SW_UPDATED') {
-        showStatus('New version available. Refresh to update.', 'success');
-      }
-    });
-
     navigator.serviceWorker
       .register('./service-worker.js')
-      .then((registration) => {
-        // Listen for updates via the registration's updatefound event
-        registration.addEventListener('updatefound', () => {
-          const newWorker = registration.installing;
-          if (newWorker) {
-            newWorker.addEventListener('statechange', () => {
-              if (newWorker.state === 'activated') {
-                showStatus('New version available. Refresh to update.', 'success');
-              }
-            });
-          }
-        });
-      })
       .catch(() => {
         // Service worker registration failed — app still works online
       });
@@ -288,6 +263,26 @@ function init() {
         keyToggle.textContent = '👁';
         keyToggle.setAttribute('aria-label', 'Show key');
       }
+    });
+  }
+
+  // Force refresh button — clears service worker cache and reloads
+  const refreshBtn = document.getElementById('refresh-btn');
+  if (refreshBtn) {
+    refreshBtn.addEventListener('click', async () => {
+      if ('serviceWorker' in navigator) {
+        const registrations = await navigator.serviceWorker.getRegistrations();
+        for (const reg of registrations) {
+          await reg.unregister();
+        }
+      }
+      if ('caches' in window) {
+        const cacheNames = await caches.keys();
+        for (const name of cacheNames) {
+          await caches.delete(name);
+        }
+      }
+      window.location.reload(true);
     });
   }
 

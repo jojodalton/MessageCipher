@@ -6,8 +6,10 @@
       "changes": [
         "Key field hidden by default with visibility toggle button",
         "Real-time forbidden character highlighting in textareas",
-        "Version badge with clickable release notes dialog",
-        "Cipher-themed PWA icons"
+        "Version badge with clickable release notes showing all versions",
+        "Cipher-themed PWA icons",
+        "Footer with theme toggle and force refresh button",
+        "Bug fixes"
       ]
     },
     {

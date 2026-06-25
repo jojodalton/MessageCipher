@@ -13,8 +13,6 @@
 <body>
   <header>
     <h1>MessageCipher</h1>
-    <span id="version-badge" class="version-badge"></span>
-    <button id="theme-toggle" type="button" aria-label="Toggle dark and light theme">🌓 Theme</button>
   </header>
 
   <main>
@@ -79,6 +77,14 @@
       <div class="highlight-warning" id="ciphertext-warning" aria-live="polite"></div>
     </section>
   </main>
+
+  <footer>
+    <span id="version-badge" class="version-badge"></span>
+    <div class="footer-actions">
+      <button id="refresh-btn" type="button" class="footer-btn" aria-label="Force refresh application">🔄</button>
+      <button id="theme-toggle" type="button" class="footer-btn" aria-label="Toggle dark and light theme">🌓</button>
+    </div>
+  </footer>
 
   <script type="module" src="./src/app.js"></script>
 </body>
