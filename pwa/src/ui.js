@@ -47,11 +47,11 @@ export function clearAllFields() {
   if (keyInput) keyInput.value = '';
   if (messageTextarea) {
     messageTextarea.value = '';
-    messageTextarea.dispatchEvent(new Event('input', { bubbles: true }));
+    try { messageTextarea.dispatchEvent(new Event('input', { bubbles: true })); } catch (e) { /* test env */ }
   }
   if (ciphertextTextarea) {
     ciphertextTextarea.value = '';
-    ciphertextTextarea.dispatchEvent(new Event('input', { bubbles: true }));
+    try { ciphertextTextarea.dispatchEvent(new Event('input', { bubbles: true })); } catch (e) { /* test env */ }
   }
 
   clearStatus();
