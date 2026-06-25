@@ -1,4 +1,4 @@
-// MessageCipher PWA Service Worker
+// MessageCipher PWA Service Worker v1.1.0
 // Cache-first strategy for offline support
 
 const CACHE_NAME = 'messagecipher-pwa-v1.1.0';
