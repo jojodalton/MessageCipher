@@ -1,12 +1,23 @@
 {
   "releases": [
     {
+      "version": "1.1.0",
+      "date": "2026-06-25",
+      "changes": [
+        "Key field hidden by default with visibility toggle button",
+        "Real-time forbidden character highlighting in textareas",
+        "Version badge with clickable release notes dialog",
+        "Cipher-themed PWA icons"
+      ]
+    },
+    {
       "version": "1.0.0",
-      "date": "2025-01-15",
+      "date": "2026-06-24",
       "changes": [
         "Initial release with encode/decode functionality",
         "Dark/light theme support",
-        "Copy and paste clipboard integration"
+        "Copy and paste clipboard integration",
+        "Offline support with service worker caching"
       ]
     }
   ]

@@ -231,6 +231,46 @@ textarea {
 }
 
 /* --------------------------------------------------------------------------
+   Key Input Group — input with visibility toggle button
+   -------------------------------------------------------------------------- */
+.key-input-group {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.key-input-group input {
+  flex: 1;
+}
+
+.key-toggle-btn {
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  border: 1px solid var(--color-input-border);
+  border-radius: 8px;
+  background-color: var(--color-bg-secondary);
+  color: var(--color-text);
+  font-size: 1.1rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: border-color 0.2s ease, background-color 0.2s ease;
+}
+
+.key-toggle-btn:hover {
+  border-color: var(--color-input-focus);
+  background-color: var(--color-bg);
+}
+
+.key-toggle-btn:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+/* --------------------------------------------------------------------------
    Textarea Wrapper with Copy/Paste Buttons
    -------------------------------------------------------------------------- */
 .textarea-wrapper {

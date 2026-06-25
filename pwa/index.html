@@ -20,13 +20,16 @@
   <main>
     <section aria-label="Key input">
       <label for="key-input">Key</label>
-      <input
-        id="key-input"
-        type="text"
-        placeholder="Enter encryption key"
-        autocomplete="off"
-        aria-describedby="key-description"
-      >
+      <div class="key-input-group">
+        <input
+          id="key-input"
+          type="password"
+          placeholder="Enter encryption key"
+          autocomplete="off"
+          aria-describedby="key-description"
+        >
+        <button id="key-toggle" type="button" class="key-toggle-btn" aria-label="Show key">👁</button>
+      </div>
       <span id="key-description" class="visually-hidden">Printable ASCII characters only, 1–1000 characters</span>
     </section>
 

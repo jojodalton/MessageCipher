@@ -24,6 +24,7 @@ import {
 } from './ui.js';
 import { loadVersion, loadReleaseNotes } from './version-manager.js';
 import { showReleaseNotesDialog } from './release-notes-dialog.js';
+import { initHighlight } from './highlight-engine.js';
 
 /**
  * Handles the Encode button click.
@@ -262,14 +263,33 @@ function init() {
 
   if (messageTextarea) {
     messageTextarea.addEventListener('input', updateMessageCopyState);
+    initHighlight(messageTextarea, true);
   }
   if (ciphertextTextarea) {
     ciphertextTextarea.addEventListener('input', updateCiphertextCopyState);
+    initHighlight(ciphertextTextarea, true);
   }
 
   // Initialize copy button states
   updateMessageCopyState();
   updateCiphertextCopyState();
+
+  // Key visibility toggle
+  const keyInput = document.getElementById('key-input');
+  const keyToggle = document.getElementById('key-toggle');
+  if (keyToggle && keyInput) {
+    keyToggle.addEventListener('click', () => {
+      if (keyInput.type === 'password') {
+        keyInput.type = 'text';
+        keyToggle.textContent = '🙈';
+        keyToggle.setAttribute('aria-label', 'Hide key');
+      } else {
+        keyInput.type = 'password';
+        keyToggle.textContent = '👁';
+        keyToggle.setAttribute('aria-label', 'Show key');
+      }
+    });
+  }
 
   // Register service worker
   registerServiceWorker();
